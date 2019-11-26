@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import './App.css';
 import Products from './Components/Products';
+import Output from './Components/Output';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   useRouteMatch,
-  useParams
+  useParams,
+  browserHistory
 } from "react-router-dom";
 import AddPage from './Components/AddPage';
 
@@ -22,7 +24,7 @@ export default class App extends React.Component{
     
      <Products />
      
-     <Switch>
+    <Switch>
     <Route exact path="/Products" component={Products} />
     <Route  path="/AddPage" component={AddPage} />
     </Switch>

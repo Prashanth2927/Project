@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import Products from './Products';
+import Output from './Output';
+
 
 class AddPage extends React.Component{
    constructor(){
        super();
    this.state={
-    students: [
+    products: [
         { id:'' , name: '', age: '', email: '' },
         
-    ]
+    ],
+     sayings: "",
 }
 
     }
@@ -16,53 +19,47 @@ class AddPage extends React.Component{
     
 
 
+    update(e){ 
+      this.setState({ sayings: this.a.value}); 
+     } 
+
+getData(cb){
+  cb(this.state.sayings)
+}
+
     renderTableData() {
-        return this.state.students.map((student, index) => {
-           const { id, name, age, email } = student 
            return (
-              <tr key={id}>
-                 <td>{id}</td>
-                 <td>{name}</td>
-                 <td>{age}</td>
-                 <td>{email}</td>
+              <tr >
+                 <td><input type="text" 
+     ref={(call_back) => {this.a = call_back}} onChange =  
+     {this.update.bind(this)}/> </td>
+                 
               </tr>
            )
-        })
+      
      }
     
 
     renderTableHeader=()=> {
-        let header = Object.keys(this.state.students[0])
+        let header = Object.keys(this.state.products[0])
         return header.map((key, index) => {
            return <th key={index}>{key.toUpperCase()}</th>
         })
      } 
 
-     AddHandler=()=>{
-        var product = {
-            
-            name: "",
-            price: "",
-            category: "",
-            qty: 0
-          }
-        this.state.students.push(product);
-        this.setState(this.state.students);
-
-         
-     }
+     
 
     render(){
     return(
         <div>
-        <table id='students'>
+        <table id='products'>
         <tbody>
            <tr>{this.renderTableHeader()}</tr>
            {this.renderTableData()}
         </tbody>
      </table>
 
-     <button onclick={this.AddHandler} className='button_background ' style={{ margin: '20px auto',
+     <button  className='button_background ' style={{ margin: '20px auto',
           display: 'flex', alignItems: 'center',
           justifyContent: 'center', cursor: 'pointer'
         }}
@@ -70,57 +67,11 @@ class AddPage extends React.Component{
          ADDRow  
         </button>
 
+      <p>{this.state.sayings}</p>
+
 </div>
     );
 }
 }
 
 export default AddPage;
-
-
-
-class ProductRow extends React.Component {
-  
-    render() {
-  
-      return (
-        <tr className="eachRow">
-          <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
-            "type": "name",
-            value: this.props.product.name,
-            id: this.props.product.id
-          }}/>
-          <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
-            type: "price",
-            value: this.props.product.price,
-            id: this.props.product.id
-          }}/>
-          <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
-            type: "qty",
-            value: this.props.product.qty,
-            id: this.props.product.id
-          }}/>
-          <EditableCell onProductTableUpdate={this.props.onProductTableUpdate} cellData={{
-            type: "category",
-            value: this.props.product.category,
-            id: this.props.product.id
-          }}/>
-         
-        </tr>
-      );
-  
-    }
-  
-  }
-  class EditableCell extends React.Component {
-  
-    render() {
-      return (
-        <td>
-          <input type='text' name={this.props.cellData.type} id={this.props.cellData.id} value={this.props.cellData.value} onChange={this.props.onProductTableUpdate}/>
-        </td>
-      );
-  
-    }
-  
-  }

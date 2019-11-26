@@ -7,15 +7,13 @@ export default class Products extends React.Component{
       constructor(props) {
       super(props) 
       this.state = { 
-         students: [
-            { id: 1, name: 'Wasif', age: 21, email: 'wasif@email.com' },
-            { id: 2, name: 'Ali', age: 19, email: 'ali@email.com' },
-            { id: 3, name: 'Saad', age: 16, email: 'saad@email.com' },
-            { id: 4, name: 'Asad', age: 25, email: 'asad@email.com' }
+         products: [
+            { id: 1, name: 'Wasif', price: 21, units: '30' },
+            { id: 2, name: 'Wadsdsdsif', price: 21, units: '30' },
+            { id: 3, name: 'Wasifds', price: 2111, units: '311' },
+            { id: 4, name: 'Wasif', price: 21, units: '30' }
          ],
-         add:
-           { id:'', name:'', age:'', email: ''},
-           showAddPage: false
+         
       }
   
    }
@@ -26,21 +24,21 @@ export default class Products extends React.Component{
    }
 
    renderTableData() {
-    return this.state.students.map((student, index) => {
-       const { id, name, age, email } = student 
+    return this.state.products.map((product, index) => {
+       const { id, name, price, units } = product 
        return (
           <tr key={id}>
              <td>{id}</td>
              <td>{name}</td>
-             <td>{age}</td>
-             <td>{email}</td>
+             <td>{price}</td>
+             <td>{units}</td>
           </tr>
        )
     })
  }
 
     renderTableHeader=()=> {
-    let header = Object.keys(this.state.students[0])
+    let header = Object.keys(this.state.products[0])
     return header.map((key, index) => {
        return <th key={index}>{key.toUpperCase()}</th>
     })
@@ -52,7 +50,7 @@ export default class Products extends React.Component{
       return(
         <div>
         <h1 id='title'>React Dynamic Table</h1>
-        <table id='students'>
+        <table id='products'>
            <tbody>
               <tr>{this.renderTableHeader()}</tr>
               {this.renderTableData()}
