@@ -19,9 +19,7 @@ export default class Products extends React.Component{
    }
 
    OnClickAdd=()=>{
-       const doesShow=this.state.showAddPage;
-       this.setState({showAddPage:!doesShow})
-      // this.props.history.push('/AddPage',{data:this.state
+      this.props.history.push('/AddPage',{data:this.state.products})
 
      
    }
@@ -50,13 +48,9 @@ export default class Products extends React.Component{
  }
 
    componentDidMount(){
-      console.log('mount',this.props.location.state.data)
-      this.state.products.push(this.props.location.state.data)
-      this.setState(prevState => ({
-         products: [...prevState.products, this.props.location.state.data]
-       }))
-      console.log(this.state.products)
-      
+      if(this.props.location.state != undefined){
+      this.setState({products: this.props.location.state.data})
+      }
    }
   
     render(){
@@ -71,7 +65,7 @@ export default class Products extends React.Component{
            </tbody>
         </table>
         
-        <Link to='AddPage'>
+
         <button onClick={this.OnClickAdd} className='button_background ' style={{ margin: '20px auto',
           display: 'flex', alignItems: 'center',
           justifyContent: 'center', cursor: 'pointer'
@@ -79,7 +73,7 @@ export default class Products extends React.Component{
          >
          ADD  
         </button>
-        </Link>
+
 
      </div>
         

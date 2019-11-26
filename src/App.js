@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
 import Products from './Components/Products';
-import Output from './Components/Output';
 import {
   BrowserRouter as Router,
   Switch,
