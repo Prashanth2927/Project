@@ -21,11 +21,9 @@ export default class App extends React.Component{
 <React.Fragment>
       <Router>
     <div className="App">
-    
-     <Products />
      
     <Switch>
-    <Route exact path="/Products" component={Products} />
+    <Route exact path="/" component={Products} />
     <Route  path="/AddPage" component={AddPage} />
     </Switch>
     

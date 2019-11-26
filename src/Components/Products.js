@@ -20,7 +20,10 @@ export default class Products extends React.Component{
 
    OnClickAdd=()=>{
        const doesShow=this.state.showAddPage;
-       this.setState({showAddPage:!doesShow});
+       this.setState({showAddPage:!doesShow})
+      // this.props.history.push('/AddPage',{data:this.state
+
+     
    }
 
    renderTableData() {
@@ -37,6 +40,8 @@ export default class Products extends React.Component{
     })
  }
 
+
+
     renderTableHeader=()=> {
     let header = Object.keys(this.state.products[0])
     return header.map((key, index) => {
@@ -44,9 +49,18 @@ export default class Products extends React.Component{
     })
  }
 
-    
-   
+   componentDidMount(){
+      console.log('mount',this.props.location.state.data)
+      this.state.products.push(this.props.location.state.data)
+      this.setState(prevState => ({
+         products: [...prevState.products, this.props.location.state.data]
+       }))
+      console.log(this.state.products)
+      
+   }
+  
     render(){
+       
       return(
         <div>
         <h1 id='title'>React Dynamic Table</h1>
@@ -58,7 +72,7 @@ export default class Products extends React.Component{
         </table>
         
         <Link to='AddPage'>
-        <button onclick={this.OnClickAdd} className='button_background ' style={{ margin: '20px auto',
+        <button onClick={this.OnClickAdd} className='button_background ' style={{ margin: '20px auto',
           display: 'flex', alignItems: 'center',
           justifyContent: 'center', cursor: 'pointer'
         }}

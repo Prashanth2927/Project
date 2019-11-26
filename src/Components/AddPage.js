@@ -23,9 +23,7 @@ class AddPage extends React.Component{
       this.setState({ sayings: this.a.value}); 
      } 
 
-getData(cb){
-  cb(this.state.sayings)
-}
+
 
     renderTableData() {
            return (
@@ -35,6 +33,7 @@ getData(cb){
      {this.update.bind(this)}/> </td>
                  
               </tr>
+              
            )
       
      }
@@ -47,9 +46,13 @@ getData(cb){
         })
      } 
 
+     addRowHandler=()=>{
+       this.props.history.push('/',{data:this.state.sayings})
+     }
      
 
     render(){
+      console.log(this.props.history.state)
     return(
         <div>
         <table id='products'>
@@ -63,6 +66,7 @@ getData(cb){
           display: 'flex', alignItems: 'center',
           justifyContent: 'center', cursor: 'pointer'
         }}
+        onClick={this.addRowHandler}
          >
          ADDRow  
         </button>
