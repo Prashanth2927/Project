@@ -22,7 +22,7 @@ export default class Products extends Component {
    delete = (e) => {
       var all_products = this.state.products
       for (var i = 0; i < all_products.length; i++) {
-         if (all_products[i].id == e.target.id) {
+         if (all_products[i].id.toString() === e.target.id) {
             this.state.products.pop(all_products[i])
             this.setState({ products: this.state.products })
          }
@@ -35,22 +35,12 @@ export default class Products extends Component {
          return (
             <tr key={id}>
                <td>{index + 1}</td>
-               <td>{id}</td>
                <td>{name}</td>
                <td>{price}</td>
                <td>{units}</td>
                <td><button onClick={this.delete} id={id}>Delete</button></td>
             </tr>
          )
-      })
-   }
-
-
-
-   renderTableHeader = () => {
-      let header = Object.keys(this.state.products[0])
-      return header.map((key, index) => {
-         return <th key={index}>{key.toUpperCase()}</th>
       })
    }
 
@@ -84,21 +74,20 @@ export default class Products extends Component {
                   <tbody>
                      <tr>
                         <th>S.No.</th>
-                        {this.renderTableHeader()}
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Units</th>
                         <th>Delete</th>
                      </tr>
                      {this.renderTableData()}
                   </tbody>
                </table>
-
-
                <button onClick={this.OnClickAdd} className='button_background ' style={{
                   margin: '20px auto',
                   display: 'flex', alignItems: 'center',
                   justifyContent: 'center', cursor: 'pointer'
                }}>ADD</button>
             </div>
-
          );
       }
       else {

@@ -16,8 +16,6 @@ class AddPage extends Component {
       this.setState({product: product})
    }
 
-
-
    renderTableData() {
       return (
          <tr >
@@ -71,11 +69,8 @@ class AddPage extends Component {
                margin: '20px auto',
                display: 'flex', alignItems: 'center',
                justifyContent: 'center', cursor: 'pointer'
-            }}
-               onClick={this.addRowHandler}
-            >
-               ADDRow
-        </button>
+            }} onClick={this.addRowHandler}>ADDRow
+            </button>
          </div>
       );
    }
