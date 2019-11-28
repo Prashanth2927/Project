@@ -1,34 +1,21 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Products from './Components/Products';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-  browserHistory
-} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import AddPage from './Components/AddPage';
 
-import Demo from './Demo';
 
-export default class App extends React.Component{
-  render(){
-    return(
-<React.Fragment>
+export default class App extends Component {
+  render() {
+    return (
       <Router>
-    <div className="App">
-     
-    <Switch>
-    <Route exact path="/" component={Products} />
-    <Route  path="/AddPage" component={AddPage} />
-    </Switch>
-    
-    </div>
-    </Router>
-   </React.Fragment>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={Products} />
+            <Route path="/AddPage" component={AddPage} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }

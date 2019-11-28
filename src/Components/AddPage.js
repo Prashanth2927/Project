@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
-import Products from './Products';
 
-
-class AddPage extends React.Component {
+class AddPage extends Component {
    constructor() {
       super();
       this.state = {
          products: [],
-         product: { id: '', name: '', price: '', units: '' }
+         product: { id: '', name: '', price: '', units: '' },
+         unique_id: ""
       }
 
    }
 
-
-
-
    update(e) {
-      let product = { id: this.a.value, name:this.b.value, price: this.c.value, units: this.d.value }
+      let product = { id: this.state.unique_id, name:this.b.value, price: this.c.value, units: this.d.value }
       this.setState({product: product})
    }
 
@@ -25,19 +21,15 @@ class AddPage extends React.Component {
    renderTableData() {
       return (
          <tr >
-            <td><input type="text"
-               ref={(call_back) => { this.a = call_back }} onChange=
-               {this.update.bind(this)} /> </td>
                <td><input type="text"
                ref={(call_back) => { this.b = call_back }} onChange=
-               {this.update.bind(this)} /> </td>
+               {this.update.bind(this)} required/> </td>
                <td><input type="text"
                ref={(call_back) => { this.c = call_back }} onChange=
-               {this.update.bind(this)} /> </td>
+               {this.update.bind(this)} required/> </td>
                <td><input type="text"
                ref={(call_back) => { this.d = call_back }} onChange=
-               {this.update.bind(this)} /> </td>
-
+               {this.update.bind(this)} required/> </td>
          </tr>
 
       )
@@ -45,8 +37,11 @@ class AddPage extends React.Component {
    }
    componentDidMount() {
       if (this.props.location.state !== undefined) {
-         this.state.products = this.props.location.state.data;
-         this.setState({ products: this.state.products })
+         this.setState({ products: this.props.location.state.data })
+         this.setState({unique_id: this.props.location.state.unique_id})
+      }
+      else{
+         this.setState({unique_id: 100})
       }
    }
 
@@ -54,18 +49,16 @@ class AddPage extends React.Component {
    addRowHandler = () => {
       this.state.products.push(this.state.product)
       this.setState({ products: this.state.products });
-      this.props.history.push('/', { data: this.state.products })
+      this.props.history.push('/', { data: this.state.products, unique_id: this.state.unique_id })
    }
 
 
    render() {
-      console.log(this.props.history.state)
       return (
          <div>
             <table id='products'>
                <tbody>
                   <tr>
-                     <th>ID</th>
                      <th>Name</th>
                      <th>PRICE</th>
                      <th>UNITS</th>
