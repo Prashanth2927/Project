@@ -11,6 +11,7 @@ class MovieRow extends React.Component{
     return (
         <table key={this.props.movie.id}>
     <tbody>
+     
      <tr>
        <td>
            <img width='100' alt="poster" src={this.props.movie.poster_src} />
@@ -18,7 +19,9 @@ class MovieRow extends React.Component{
        <td>
           {this.props.movie.title}
        <p>{this.props.movie.overview}</p>
-       <input type='button' onClick={this.viewMovie.bind(this)} value="View"/>
+    <p>Rating {this.props.movie.vote_average}</p> 
+    <p>Genres{this.props.movie.genre_ids}</p>
+    {/*<input type='button' onClick={this.viewMovie.bind(this)} value="View"/>*/}
        </td>
      </tr>
      </tbody>
