@@ -10,10 +10,11 @@ import $ from 'jquery';
 export default class App extends Component {
   constructor(props){
     super(props);
+   
       this.state={
           rows: '',
           genres: '',
-          filter: ''
+          options: []
 
       }
 
@@ -34,25 +35,20 @@ export default class App extends Component {
     rows: movieRows,
   }*/
 
-     this.performSearch("")
+  this.performSearch("avenger")
 
   }
 
-  performSearch(searchTerm,demo){
-    console.log("yes"+searchTerm)
-    const urlString= "https://api.themoviedb.org/3/discover/movie?api_key=fb5ff6bf0f9582783e48fd20162740f5&language=en-US&sort_by=original_title.asc&page=1&with_genres=" + searchTerm
-   // const urlString= "https://api.themoviedb.org/3/search/movie?api_key=fb5ff6bf0f9582783e48fd20162740f5&query=" + searchTerm
-   // const urlString= "https://api.themoviedb.org/3/" +demo  + "/movie?api_key=fb5ff6bf0f9582783e48fd20162740f5&query=" + searchTerm + "&language=en-US&sort_by=original_title.asc&page=1&with_genres=" + searchTerm
-   //const searchurl="search/movie?api_key=fb5ff6bf0f9582783e48fd20162740f5&query=" + searchTerm
-   //const filterurl="discover/movie?api_key=fb5ff6bf0f9582783e48fd20162740f5&language=en-US&sort_by=original_title.asc&page=1&with_genres=" + 12
-   // const urlString= "https://api.themoviedb.org/3/" + filterurl + searchurl 
-    
-   
 
+
+  performFilter(){
+    console.log("filter")
+    const urlString= "https://api.themoviedb.org/3/discover/movie?api_key=fb5ff6bf0f9582783e48fd20162740f5&language=en-US&sort_by=original_title.asc&page=1&with_genres=" + this.state.options
+   
      $.ajax ({
         url: urlString,
         success: (searchResults) =>{
-          //console.log(searchResults)
+          console.log(searchResults)
           const results = searchResults.results
              
            var movieRows=[];
@@ -60,8 +56,7 @@ export default class App extends Component {
                movie.poster_src = "https://image.tmdb.org/t/p/w185" + movie.poster_path
               const movieRow = <MovieRow key={movie.id} movie={movie} />
               const genre_list = movie.genre_ids
-              //console.log("hello" + genre_list)
-              //console.log("hi" + movie.genre_ids)
+              
               movieRows.push(movieRow)   
              })
 
@@ -75,28 +70,59 @@ export default class App extends Component {
 
     }
 
+    performSearch(searchTerm){
+     
+      const urlString= "https://api.themoviedb.org/3/search/movie?api_key=fb5ff6bf0f9582783e48fd20162740f5&query=" + searchTerm
+    
+       $.ajax ({
+          url: urlString,
+          success: (searchResults) =>{
+            console.log(searchResults)
+            const results = searchResults.results
+               
+             var movieRows=[];
+               results.forEach((movie)=>{
+                 movie.poster_src = "https://image.tmdb.org/t/p/w185" + movie.poster_path
+                const movieRow = <MovieRow key={movie.id} movie={movie} />
+                const genre_list = movie.genre_ids
+              
+                movieRows.push(movieRow)   
+               })
+  
+               this.setState({rows: movieRows})
+          },
+          error: (xhr, status, err) =>{
+            console.log("error")
+          } 
+          
+      })
+  
+      }
+
     searchChangeHandler=(event)=>{
       const searchTerm = event.target.value
       this.performSearch(searchTerm)
     }
 
-     ChangeHandler=(event)=>{
-       const ischecked = event.target.checked       
-       console.log(ischecked)  
-       console.log(event.target.value)
-       const genreValue = event.target.value
-       //this.performSearch(searchTerm)
-       if(ischecked){
-         this.filterHandler(genreValue)
+
+
+     ChangeHandler=(e)=>{
+      const options = this.state.options
+      let index
+       if(e.target.checked) {
+         options.push(e.target.value)
+        
        }
 
-       
+       else {index = options.indexOf(e.target.value)
+              options.splice(index,1)
+      }
+      this.setState({ options: options })
+    
+       this.performFilter(options)
+       console.log(options)
+      
 
-     }
-
-     filterHandler=(genreValue)=>{
-       const searchTerm = genreValue
-       this.performSearch(searchTerm)
      }
 
   render() {
@@ -135,7 +161,7 @@ export default class App extends Component {
             paddingLeft:16,
           }}
                  onChange= {this.searchChangeHandler.bind(this)}
-                 placeholder="Search" />
+                 placeholder="Search with title" />
         </div>
          
          <div className="col-2">
@@ -200,7 +226,8 @@ export default class App extends Component {
                   <input type="checkbox" onChange={this.ChangeHandler.bind(this)} name="Western" value="37"/> Western
                     </li>
                </ul>
-        {/*  <button onSubmit={this.filterHandler.bind(this)}>Search</button>*/}
+               
+         
             </div>
          </div>
         
